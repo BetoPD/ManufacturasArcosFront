@@ -1,21 +1,22 @@
 import React from 'react';
 import Search from './Search';
+import { Link } from 'react-router-dom';
 
 export default function Header() {
   return (
     <nav className="navbar row">
       <div className="col-12 col-md-3 ps-5">
         <div className="navbar-brand">
-          <a href="/">
+          <Link to="/">
             <img src="/images/shopit_logo.png" alt="ShopIT Logo" />
-          </a>
+          </Link>
         </div>
       </div>
       <div className="col-12 col-md-6 mt-2 mt-md-0">
         <Search />
       </div>
       <div className="col-12 col-md-3 mt-4 mt-md-0 text-center">
-        <a href="/cart" style={{ 'text-decoration': 'none' }}>
+        <Link to="/cart" style={{ 'text-decoration': 'none' }}>
           <span id="cart" className="ms-3">
             {' '}
             Cart{' '}
@@ -23,7 +24,7 @@ export default function Header() {
           <span className="ms-1" id="cart_count">
             0
           </span>
-        </a>
+        </Link>
 
         <div className="ms-4 dropdown">
           <button
@@ -46,32 +47,32 @@ export default function Header() {
             className="dropdown-menu w-100"
             aria-labelledby="dropDownMenuButton"
           >
-            <a className="dropdown-item" href="/admin/dashboard">
+            <Link className="dropdown-item" to="/admin/dashboard">
               {' '}
               Panel de Control{' '}
-            </a>
+            </Link>
 
-            <a className="dropdown-item" href="/me/orders">
+            <Link className="dropdown-item" to="/me/orders">
               {' '}
               Órdenes{' '}
-            </a>
+            </Link>
 
-            <a className="dropdown-item" href="/me/profile">
+            <Link className="dropdown-item" to="/me/profile">
               {' '}
               Perfil{' '}
-            </a>
+            </Link>
 
-            <a className="dropdown-item text-danger" href="/">
+            <Link className="dropdown-item text-danger" to="/">
               {' '}
               Logout{' '}
-            </a>
+            </Link>
           </div>
         </div>
 
-        <a href="/login" className="btn ms-4" id="login_btn">
+        <Link to="/login" className="btn ms-4" id="login_btn">
           {' '}
           Login{' '}
-        </a>
+        </Link>
       </div>
     </nav>
   );

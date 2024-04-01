@@ -109,7 +109,7 @@ export default function Filters({ categories }) {
       <hr />
       <h5 className="mb-3">Ratings</h5>
       {[5, 4, 3, 2, 1].map((rating) => (
-        <div className="form-check">
+        <div className="form-check" key={rating}>
           <input
             className="form-check-input"
             type="checkbox"
