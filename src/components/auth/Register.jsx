@@ -7,13 +7,13 @@ export default function Register() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const [register, { error, isError, isLoading }] = useRegisterMutation();
+  const [register, { error, isLoading }] = useRegisterMutation();
 
   useEffect(() => {
-    if (isError) {
+    if (error) {
       toast.error(error?.data?.message);
     }
-  }, [error, isError]);
+  }, [error]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

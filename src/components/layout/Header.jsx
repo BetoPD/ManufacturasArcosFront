@@ -1,8 +1,24 @@
 import React from 'react';
 import Search from './Search';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useGetMeQuery } from '../../redux/api/userApi';
+import { useSelector } from 'react-redux';
+import { useLazyLogoutQuery } from '../../redux/api/authApi';
 
 export default function Header() {
+  const navigate = useNavigate();
+
+  const { isLoading } = useGetMeQuery();
+
+  const { user } = useSelector((state) => state.auth);
+
+  const [logout] = useLazyLogoutQuery();
+
+  const handleClick = () => {
+    logout();
+    navigate(0);
+  };
+
   return (
     <nav className="navbar row">
       <div className="col-12 col-md-3 ps-5">
@@ -25,54 +41,61 @@ export default function Header() {
             0
           </span>
         </Link>
+        {user ? (
+          <div className="ms-4 dropdown">
+            <button
+              className="btn dropdown-toggle text-white"
+              type="button"
+              id="dropDownMenuButton"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <figure className="avatar avatar-nav">
+                <img
+                  src={user?.url || '../images/default_avatar.jpg'}
+                  alt="User Avatar"
+                  className="rounded-circle"
+                />
+              </figure>
+              <span>{user?.name}</span>
+            </button>
+            <div
+              className="dropdown-menu w-100"
+              aria-labelledby="dropDownMenuButton"
+            >
+              <Link className="dropdown-item" to="/admin/dashboard">
+                {' '}
+                Panel de Control{' '}
+              </Link>
 
-        <div className="ms-4 dropdown">
-          <button
-            className="btn dropdown-toggle text-white"
-            type="button"
-            id="dropDownMenuButton"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            <figure className="avatar avatar-nav">
-              <img
-                src="../images/default_avatar.jpg"
-                alt="User Avatar"
-                className="rounded-circle"
-              />
-            </figure>
-            <span>User</span>
-          </button>
-          <div
-            className="dropdown-menu w-100"
-            aria-labelledby="dropDownMenuButton"
-          >
-            <Link className="dropdown-item" to="/admin/dashboard">
-              {' '}
-              Panel de Control{' '}
-            </Link>
+              <Link className="dropdown-item" to="/me/orders">
+                {' '}
+                Órdenes{' '}
+              </Link>
 
-            <Link className="dropdown-item" to="/me/orders">
-              {' '}
-              Órdenes{' '}
-            </Link>
+              <Link className="dropdown-item" to="/me/profile">
+                {' '}
+                Perfil{' '}
+              </Link>
 
-            <Link className="dropdown-item" to="/me/profile">
-              {' '}
-              Perfil{' '}
-            </Link>
-
-            <Link className="dropdown-item text-danger" to="/">
-              {' '}
-              Logout{' '}
-            </Link>
+              <Link
+                className="dropdown-item text-danger"
+                to="/"
+                onClick={handleClick}
+              >
+                {' '}
+                Logout{' '}
+              </Link>
+            </div>
           </div>
-        </div>
-
-        <Link to="/login" className="btn ms-4" id="login_btn">
-          {' '}
-          Login{' '}
-        </Link>
+        ) : (
+          !isLoading && (
+            <Link to="/login" className="btn ms-4" id="login_btn">
+              {' '}
+              Login{' '}
+            </Link>
+          )
+        )}
       </div>
     </nav>
   );

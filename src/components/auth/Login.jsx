@@ -1,19 +1,27 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useLoginMutation } from '../../redux/api/authApi';
 import toast from 'react-hot-toast';
+import { useSelector } from 'react-redux';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const [login, { isLoading, error, isError }] = useLoginMutation();
+  const [login, { isLoading, error }] = useLoginMutation();
+
+  const { isAuthenticated } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if (isError) {
+    if (isAuthenticated) {
+      navigate('/');
+    }
+
+    if (error) {
       toast.error(error?.data?.message);
     }
-  }, [error, isError]);
+  }, [error, navigate]);
 
   const handleSumbit = (e) => {
     e.preventDefault();
