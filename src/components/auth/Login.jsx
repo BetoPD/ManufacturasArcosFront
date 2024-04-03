@@ -21,14 +21,12 @@ export default function Login() {
     if (error) {
       toast.error(error?.data?.message);
     }
-  }, [error, navigate]);
+  }, [error, isAuthenticated, navigate]);
 
   const handleSumbit = (e) => {
     e.preventDefault();
-
     setPassword('');
     const loginData = { email, password };
-
     login(loginData);
   };
 
