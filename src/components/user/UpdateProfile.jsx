@@ -30,7 +30,7 @@ export default function UpdateProfile() {
       toast.success('Usuario Actualizado!');
       navigate('/me/profile');
     }
-  }, [user, error, isSuccess]);
+  }, [user, error, isSuccess, navigate]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

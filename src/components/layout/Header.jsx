@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Search from './Search';
 import { Link, useNavigate } from 'react-router-dom';
 import { useGetMeQuery } from '../../redux/api/userApi';
@@ -12,11 +12,14 @@ export default function Header() {
 
   const { user } = useSelector((state) => state.auth);
 
-  const [logout] = useLazyLogoutQuery();
+  const [logout, { isSuccess }] = useLazyLogoutQuery();
+
+  useEffect(() => {
+    if (isSuccess) navigate(0);
+  }, [isSuccess, navigate]);
 
   const handleClick = () => {
     logout();
-    navigate(0);
   };
 
   return (
