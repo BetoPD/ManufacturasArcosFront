@@ -31,23 +31,23 @@ export default function ProductDetails() {
   if (isLoading) return <Loader />;
 
   return (
-    <div class="row d-flex justify-content-around">
-      <div class="col-12 col-lg-5 img-fluid" id="product_image">
-        <div class="p-3">
+    <div className="row d-flex justify-content-around">
+      <div className="col-12 col-lg-5 img-fluid" id="product_image">
+        <div className="p-3">
           <img
-            class="d-block w-100"
+            className="d-block w-100"
             src={activeImg}
             alt={activeImg}
             width="340"
             height="390"
           />
         </div>
-        <div class="row justify-content-start mt-5">
+        <div className="row justify-content-start mt-5">
           {images?.map((img) => (
-            <div class="col-2 ms-4 mt-2">
+            <div className="col-2 ms-4 mt-2">
               <a role="button">
                 <img
-                  class={`d-block border rounded p-3 cursor-pointer ${
+                  className={`d-block border rounded p-3 cursor-pointer ${
                     img?.url === activeImg ? 'border-warning' : ''
                   }`}
                   height="100"
@@ -62,13 +62,13 @@ export default function ProductDetails() {
         </div>
       </div>
 
-      <div class="col-12 col-lg-5 mt-5">
+      <div className="col-12 col-lg-5 mt-5">
         <h3>{product?.name}</h3>
         <p id="product_id">Product # w43453456456756786</p>
 
         <hr />
 
-        <div class="d-flex">
+        <div className="d-flex">
           <StarRatings
             rating={product?.rating || 0}
             starRatedColor="#ffb829"
@@ -77,7 +77,7 @@ export default function ProductDetails() {
             starDimension="24px"
             starSpacing="1px"
           />
-          <span id="no-of-reviews" class="pt-1 ps-2">
+          <span id="no-of-reviews" className="pt-1 ps-2">
             {' '}
             ({product?.commentNum} Reviews){' '}
           </span>
@@ -85,20 +85,20 @@ export default function ProductDetails() {
         <hr />
 
         <p id="product_price">${product?.price}</p>
-        <div class="stockCounter d-inline">
-          <span class="btn btn-danger minus">-</span>
+        <div className="stockCounter d-inline">
+          <span className="btn btn-danger minus">-</span>
           <input
             type="number"
-            class="form-control count d-inline"
+            className="form-control count d-inline"
             value="1"
             readonly
           />
-          <span class="btn btn-primary plus">+</span>
+          <span className="btn btn-primary plus">+</span>
         </div>
         <button
           type="button"
           id="cart_btn"
-          class="btn btn-primary d-inline ms-4"
+          className="btn btn-primary d-inline ms-4"
           disabled=""
         >
           Añadir al carrito
@@ -110,7 +110,7 @@ export default function ProductDetails() {
           Status:{' '}
           <span
             id="stock_status"
-            class={product?.stock > 0 ? 'greenColor' : 'redColor'}
+            className={product?.stock > 0 ? 'greenColor' : 'redColor'}
           >
             {product?.stock > 0 ? 'In Stock' : 'Out of Stock'}
           </span>
@@ -118,14 +118,14 @@ export default function ProductDetails() {
 
         <hr />
 
-        <h4 class="mt-2">Descripción:</h4>
+        <h4 className="mt-2">Descripción:</h4>
         <p>{product?.description}</p>
         <hr />
         <p id="product_seller mb-3">
           Vendido Por: <strong>{product?.seller}</strong>
         </p>
 
-        <div class="alert alert-danger my-5" type="alert">
+        <div className="alert alert-danger my-5" type="alert">
           Login para publicar to reseña.
         </div>
       </div>

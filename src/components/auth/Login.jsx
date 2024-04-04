@@ -21,7 +21,7 @@ export default function Login() {
     if (error) {
       toast.error(error?.data?.message);
     }
-  }, [error, isAuthenticated, navigate]);
+  }, [error, isAuthenticated]);
 
   const handleSumbit = (e) => {
     e.preventDefault();

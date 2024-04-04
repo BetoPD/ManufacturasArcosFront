@@ -21,7 +21,7 @@ export default function Register() {
     if (error) {
       toast.error(error?.data?.message);
     }
-  }, [error, isAuthenticated, navigate]);
+  }, [error, isAuthenticated]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
