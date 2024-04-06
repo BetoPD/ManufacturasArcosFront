@@ -5,7 +5,7 @@ export default function UserLayout({ children }) {
   return (
     <div>
       <div className="mt-2 mb-4 py-4">
-        <h2 className="text-center fw-bolder">User settings</h2>
+        <h2 className="text-center fw-bolder">Configuración de Usuario</h2>
       </div>
 
       <div className="container">

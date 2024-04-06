@@ -81,6 +81,7 @@ export default function UploadAvatar() {
                     id="customFile"
                     accept="images/*"
                     onChange={handleChange}
+                    required
                   />
                 </div>
               </div>

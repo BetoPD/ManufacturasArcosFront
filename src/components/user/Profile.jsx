@@ -25,7 +25,7 @@ export default function Profile() {
           <h4>Correo</h4>
           <p>{user?.email}</p>
 
-          <h4>Cuenta Creada</h4>
+          <h4>Creada en</h4>
           <p>{user?.created_at.substring(0, 10)}</p>
         </div>
       </div>

@@ -4,22 +4,22 @@ import { Link, useLocation } from 'react-router-dom';
 export default function SideMenu() {
   const menuItems = [
     {
-      name: 'Profile',
+      name: 'Perfil',
       url: '/me/profile',
       icon: 'fas fa-user',
     },
     {
-      name: 'Update Profile',
+      name: 'Actualizar perfil',
       url: '/me/update_profile',
       icon: 'fas fa-user',
     },
     {
-      name: 'Upload Avatar',
+      name: 'Subir imagen',
       url: '/me/upload_avatar',
       icon: 'fas fa-user-circle',
     },
     {
-      name: 'Update Password',
+      name: 'Actualizar Contraseña',
       url: '/me/update_password',
       icon: 'fas fa-lock',
     },
