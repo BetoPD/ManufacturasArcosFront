@@ -35,6 +35,10 @@ nav {
   padding: 0.1rem 1rem;
 }
 
+.navbar .logo-ma {
+  width: 75px;
+}
+
 .dropdown {
   position: relative;
   display: inline-block;
@@ -164,11 +168,11 @@ footer {
 }
 
 .redColor {
-  color: red;
+  color: red !important;
 }
 
 .greenColor {
-  color: green;
+  color: green !important;
 }
 
 #product_image {

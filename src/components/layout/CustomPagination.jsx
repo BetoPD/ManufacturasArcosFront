@@ -6,7 +6,7 @@ export default function CustomPagination({
   resPerPage,
   filteredProductsCount,
 }) {
-  const [currentPage, setCurrentPage] = useState();
+  const [currentPage, setCurrentPage] = useState(1);
   let [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
@@ -19,9 +19,9 @@ export default function CustomPagination({
   const setCurrentPageNo = (pageNumber) => {
     setCurrentPage(pageNumber);
     if (searchParams.has('page')) {
-      searchParams.set('page', currentPage);
+      searchParams.set('page', pageNumber);
     } else {
-      searchParams.append('page', currentPage);
+      searchParams.append('page', pageNumber);
     }
 
     const path = window.location.pathname + '?' + searchParams.toString();

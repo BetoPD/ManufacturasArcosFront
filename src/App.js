@@ -15,6 +15,12 @@ import UpdatePassword from './components/user/UpdatePassword';
 import ForgotPassword from './components/auth/ForgotPassword';
 import ResetPassword from './components/auth/ResetPassword';
 import Cart from './components/cart/Cart';
+import Shipping from './components/cart/Shipping';
+import ConfirmOrder from './components/cart/ConfirmOrder';
+import PaymentMethod from './components/cart/PaymentMethod';
+import MyOrders from './components/order/MyOrders';
+import OrderDetails from './components/order/OrderDetails';
+import Invoice from './components/invoice/Invoice';
 
 function App() {
   return (
@@ -35,6 +41,12 @@ function App() {
               <Route path="/me/update_profile" element={<UpdateProfile />} />
               <Route path="/me/upload_avatar" element={<UploadAvatar />} />
               <Route path="/me/update_password" element={<UpdatePassword />} />
+              <Route path="/shipping" element={<Shipping />} />
+              <Route path="/confirm_order" element={<ConfirmOrder />} />
+              <Route path="/payment_method" element={<PaymentMethod />} />
+              <Route path="/me/orders" element={<MyOrders />} />
+              <Route path="/me/orders/:id" element={<OrderDetails />} />
+              <Route path="/invoice/order/:id" element={<Invoice />} />
             </Route>
             <Route path="/cart" element={<Cart />} />
           </Routes>

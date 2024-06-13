@@ -4,16 +4,19 @@ import { useParams } from 'react-router-dom';
 import Loader from '../layout/Loader';
 import toast from 'react-hot-toast';
 import StarRatings from 'react-star-ratings';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setCartItems } from '../../redux/features/cartSlice';
 import MetaData from '../layout/MetaData';
+import NewReview from '../review/NewReview';
+import ListReviews from '../review/ListReviews';
 
 export default function ProductDetails() {
   const params = useParams();
   const dispatch = useDispatch();
 
-  const [activeImg, setActiveImg] = useState('');
+  const [activeImg, setActiveImg] = useState('/images/default_product.png');
   const [quantity, setQuantity] = useState(1);
+  const { isAuthenticated } = useSelector((state) => state.auth);
 
   const { data, isLoading, error, isError } = useGetProductDetailsQuery(
     params?.id
@@ -29,10 +32,10 @@ export default function ProductDetails() {
   const images = data?.images;
 
   useEffect(() => {
-    setActiveImg(
-      data?.images[0]?.url ? images[0]?.url : '/images/default_product.png'
-    );
-  }, [product, data, images]);
+    if (images?.[0]?.url) {
+      setActiveImg(images[0].url);
+    }
+  }, [images]);
 
   if (isLoading) return <Loader />;
 
@@ -85,7 +88,7 @@ export default function ProductDetails() {
           </div>
           <div className="row justify-content-start mt-5">
             {images?.map((img) => (
-              <div className="col-2 ms-4 mt-2">
+              <div className="col-2 ms-4 mt-2" key={img?.url}>
                 <a role="button">
                   <img
                     className={`d-block border rounded p-3 cursor-pointer ${
@@ -105,7 +108,7 @@ export default function ProductDetails() {
 
         <div className="col-12 col-lg-5 mt-5">
           <h3>{product?.name}</h3>
-          <p id="product_id">Product # {product?.id}</p>
+          <p id="product_id">Producto # {product?.id}</p>
 
           <hr />
 
@@ -120,7 +123,7 @@ export default function ProductDetails() {
             />
             <span id="no-of-reviews" className="pt-1 ps-2">
               {' '}
-              ({product?.commentNum} Reviews){' '}
+              ({product?.commentNum} Reseñas){' '}
             </span>
           </div>
           <hr />
@@ -134,7 +137,7 @@ export default function ProductDetails() {
               type="number"
               className="form-control count d-inline"
               value={quantity}
-              readonly
+              readOnly
             />
             <span className="btn btn-primary plus" onClick={increaseQty}>
               +
@@ -153,12 +156,12 @@ export default function ProductDetails() {
           <hr />
 
           <p>
-            Status:{' '}
+            Estatus:{' '}
             <span
               id="stock_status"
               className={product?.stock > 0 ? 'greenColor' : 'redColor'}
             >
-              {product?.stock > 0 ? 'In Stock' : 'Out of Stock'}
+              {product?.stock > 0 ? 'Disponible' : 'Agotado'}
             </span>
           </p>
 
@@ -170,12 +173,16 @@ export default function ProductDetails() {
           <p id="product_seller mb-3">
             Vendido Por: <strong>{product?.seller}</strong>
           </p>
-
-          <div className="alert alert-danger my-5" type="alert">
-            Login para publicar to reseña.
-          </div>
+          {isAuthenticated ? (
+            <NewReview productId={params?.id} />
+          ) : (
+            <div className="alert alert-danger my-5" type="alert">
+              Login para publicar to reseña.
+            </div>
+          )}
         </div>
       </div>
+      {data?.reviews?.length > 0 && <ListReviews reviews={data?.reviews} />}
     </>
   );
 }

@@ -13,7 +13,7 @@ export default function Filters({ categories }) {
   useEffect(() => {
     searchParams.has('min') && setMin(searchParams.get('min'));
     searchParams.has('max') && setMax(searchParams.get('max'));
-  }, []);
+  }, [setMin, setMax, searchParams]);
 
   const handleBottomClick = (e) => {
     e.preventDefault();

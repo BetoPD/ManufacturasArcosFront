@@ -1,10 +1,11 @@
 import React from 'react';
 import MetaData from '../layout/MetaData';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { setCartItems } from '../../redux/features/cartSlice';
+import { Link, useNavigate } from 'react-router-dom';
+import { removeCartItem, setCartItems } from '../../redux/features/cartSlice';
 
 export default function Cart() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const { cartItems } = useSelector((state) => state.cart);
@@ -38,6 +39,14 @@ export default function Cart() {
     dispatch(setCartItems(cartItem));
   };
 
+  const removeCartItemHandler = (id) => {
+    dispatch(removeCartItem(id));
+  };
+
+  const checkoutHandler = () => {
+    navigate('/shipping');
+  };
+
   return (
     <>
       <MetaData title={'Tu carrito'} />
@@ -52,7 +61,7 @@ export default function Cart() {
           <div className="row d-flex justify-content-between">
             <div className="col-12 col-lg-8">
               {cartItems?.map((cartItem) => (
-                <>
+                <React.Fragment key={cartItem?.product}>
                   <hr />
                   <div className="cart-item" data-key="product1">
                     <div className="row">
@@ -88,7 +97,7 @@ export default function Cart() {
                             type="number"
                             className="form-control count d-inline"
                             value={cartItem?.quantity}
-                            readonly
+                            readOnly
                           />
                           <span
                             className="btn btn-primary plus"
@@ -105,12 +114,15 @@ export default function Cart() {
                         <i
                           id="delete_cart_item"
                           className="fa fa-trash btn btn-danger"
+                          onClick={() =>
+                            removeCartItemHandler(cartItem?.product)
+                          }
                         ></i>
                       </div>
                     </div>
                   </div>
                   <hr />
-                </>
+                </React.Fragment>
               ))}
             </div>
 
@@ -120,15 +132,33 @@ export default function Cart() {
                 <hr />
                 <p>
                   Subtotal:{' '}
-                  <span className="order-summary-values">8 (Units)</span>
+                  <span className="order-summary-values">
+                    {cartItems?.reduce(
+                      (prev, item) => prev + item?.quantity,
+                      0
+                    )}{' '}
+                    (Unidades)
+                  </span>
                 </p>
                 <p>
                   Est. total:{' '}
-                  <span className="order-summary-values">$1499.97</span>
+                  <span className="order-summary-values">
+                    {'$'}
+                    {cartItems
+                      ?.reduce(
+                        (prev, item) => prev + item?.price * item?.quantity,
+                        0
+                      )
+                      .toFixed(2)}
+                  </span>
                 </p>
                 <hr />
-                <button id="checkout_btn" className="btn btn-primary w-100">
-                  Check out
+                <button
+                  id="checkout_btn"
+                  className="btn btn-primary w-100"
+                  onClick={checkoutHandler}
+                >
+                  Proceder al pago
                 </button>
               </div>
             </div>
