@@ -92,6 +92,7 @@ export default function NewReview({ productId }) {
                     data-bs-dismiss="modal"
                     aria-label="Close"
                     onClick={submitHandler}
+                    disabled={isLoading}
                   >
                     Publicar
                   </button>
