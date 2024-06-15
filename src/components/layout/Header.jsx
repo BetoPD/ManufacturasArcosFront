@@ -13,6 +13,8 @@ export default function Header() {
   const { user } = useSelector((state) => state.auth);
   const { cartItems } = useSelector((state) => state.cart);
 
+  const admin = user?.role === 'admin';
+
   const [logout, { isSuccess }] = useLazyLogoutQuery();
 
   useEffect(() => {
@@ -28,7 +30,11 @@ export default function Header() {
       <div className="col-12 col-md-3 ps-5">
         <div className="navbar-brand">
           <Link to="/">
-            <img src="/images/ma_logo.png" alt="ShopIT Logo" className='logo-ma'/>
+            <img
+              src="/images/ma_logo.png"
+              alt="ShopIT Logo"
+              className="logo-ma"
+            />
           </Link>
         </div>
       </div>
@@ -67,10 +73,12 @@ export default function Header() {
               className="dropdown-menu w-100"
               aria-labelledby="dropDownMenuButton"
             >
-              <Link className="dropdown-item" to="/admin/dashboard">
-                {' '}
-                Panel de Control{' '}
-              </Link>
+              {admin && (
+                <Link className="dropdown-item" to="/admin/dashboard">
+                  {' '}
+                  Panel de Control{' '}
+                </Link>
+              )}
 
               <Link className="dropdown-item" to="/me/orders">
                 {' '}
