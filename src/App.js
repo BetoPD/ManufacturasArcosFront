@@ -23,6 +23,10 @@ import OrderDetails from './components/order/OrderDetails';
 import Invoice from './components/invoice/Invoice';
 import AdminRoutes from './components/admin/AdminRoutes';
 import Dashboard from './components/admin/Dashboard';
+import ListProducts from './components/admin/ListProducts';
+import NewProduct from './components/admin/NewProduct';
+import UpdateProduct from './components/admin/UpdateProduct';
+import UploadImages from './components/admin/UploadImages';
 
 function App() {
   return (
@@ -50,10 +54,17 @@ function App() {
               <Route path="/me/orders/:id" element={<OrderDetails />} />
               <Route path="/invoice/order/:id" element={<Invoice />} />
             </Route>
+            <Route path="/cart" element={<Cart />} />
             <Route path="/admin" element={<AdminRoutes />}>
               <Route path="dashboard" element={<Dashboard />} />
+              <Route path="products" element={<ListProducts />} />
+              <Route path="product/new" element={<NewProduct />} />
+              <Route path="products/:id" element={<UpdateProduct />} />
+              <Route
+                path="products/:id/upload_images"
+                element={<UploadImages />}
+              />
             </Route>
-            <Route path="/cart" element={<Cart />} />
           </Routes>
         </div>
         <Footer />
