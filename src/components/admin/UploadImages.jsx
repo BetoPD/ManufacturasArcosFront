@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {
+  useDeleteProductImageMutation,
   useGetProductDetailsQuery,
   useUploadProductImagesMutation,
 } from '../../redux/api/productsApi';
@@ -17,6 +18,14 @@ export default function UploadImages() {
   const [uploadedImages, setUploadedImages] = useState([]);
   const [uploadProductImages, { error, isLoading, isSuccess }] =
     useUploadProductImagesMutation();
+  const [
+    deleteProductImage,
+    {
+      error: deleteError,
+      isLoading: isDeleteLoading,
+      isSuccess: isDeleteSuccess,
+    },
+  ] = useDeleteProductImageMutation();
   const { data } = useGetProductDetailsQuery(params?.id);
 
   useEffect(() => {
@@ -35,6 +44,16 @@ export default function UploadImages() {
       setUploadedImages(data?.images);
     }
   }, [data]);
+
+  useEffect(() => {
+    if (deleteError) {
+      toast.error(deleteError?.data?.message);
+    }
+
+    if (isDeleteSuccess) {
+      toast.success('Imagen eliminada!');
+    }
+  }, [deleteError, isDeleteSuccess]);
 
   const onChange = (e) => {
     const files = Array.from(e.target.files);
@@ -66,6 +85,10 @@ export default function UploadImages() {
   const submitHandler = (e) => {
     e.preventDefault();
     uploadProductImages({ id: params?.id, body: { images } });
+  };
+
+  const deleteImage = (imageId) => {
+    deleteProductImage({ id: params?.id, body: { imageId } });
   };
 
   return (
@@ -146,8 +169,9 @@ export default function UploadImages() {
                               'border-color': '#dc3545',
                             }}
                             className="btn btn-block btn-danger cross-button mt-1 py-0"
-                            disabled="true"
+                            disabled={isLoading || isDeleteLoading}
                             type="button"
+                            onClick={() => deleteImage(image?.public_id)}
                           >
                             <i className="fa fa-trash"></i>
                           </button>
@@ -163,7 +187,7 @@ export default function UploadImages() {
               id="register_button"
               type="submit"
               className="btn w-100 py-2"
-              disabled={isLoading}
+              disabled={isLoading || isDeleteLoading}
             >
               {isLoading ? 'Uploading...' : 'Upload'}
             </button>

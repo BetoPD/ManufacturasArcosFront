@@ -27,6 +27,8 @@ import ListProducts from './components/admin/ListProducts';
 import NewProduct from './components/admin/NewProduct';
 import UpdateProduct from './components/admin/UpdateProduct';
 import UploadImages from './components/admin/UploadImages';
+import ListOrders from './components/admin/ListOrders';
+import ProcessOrder from './components/admin/ProcessOrder';
 
 function App() {
   return (
@@ -60,6 +62,8 @@ function App() {
               <Route path="products" element={<ListProducts />} />
               <Route path="product/new" element={<NewProduct />} />
               <Route path="products/:id" element={<UpdateProduct />} />
+              <Route path="orders" element={<ListOrders />} />
+              <Route path="orders/:id" element={<ProcessOrder />} />
               <Route
                 path="products/:id/upload_images"
                 element={<UploadImages />}
