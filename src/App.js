@@ -29,6 +29,8 @@ import UpdateProduct from './components/admin/UpdateProduct';
 import UploadImages from './components/admin/UploadImages';
 import ListOrders from './components/admin/ListOrders';
 import ProcessOrder from './components/admin/ProcessOrder';
+import ListUsers from './components/admin/ListUsers';
+import UpdateUser from './components/admin/UpdateUser';
 
 function App() {
   return (
@@ -60,14 +62,16 @@ function App() {
             <Route path="/admin" element={<AdminRoutes />}>
               <Route path="dashboard" element={<Dashboard />} />
               <Route path="products" element={<ListProducts />} />
-              <Route path="product/new" element={<NewProduct />} />
-              <Route path="products/:id" element={<UpdateProduct />} />
-              <Route path="orders" element={<ListOrders />} />
-              <Route path="orders/:id" element={<ProcessOrder />} />
               <Route
                 path="products/:id/upload_images"
                 element={<UploadImages />}
               />
+              <Route path="product/new" element={<NewProduct />} />
+              <Route path="products/:id" element={<UpdateProduct />} />
+              <Route path="orders" element={<ListOrders />} />
+              <Route path="orders/:id" element={<ProcessOrder />} />
+              <Route path="users" element={<ListUsers />} />
+              <Route path="users/:id" element={<UpdateUser />} />
             </Route>
           </Routes>
         </div>
