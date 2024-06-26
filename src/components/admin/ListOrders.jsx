@@ -1,5 +1,8 @@
 import React, { useEffect } from 'react';
-import { useGetAdminOrdersQuery } from '../../redux/api/orderApi';
+import {
+  useDeleteOrderMutation,
+  useGetAdminOrdersQuery,
+} from '../../redux/api/orderApi';
 import toast from 'react-hot-toast';
 import AdminLayout from '../layout/AdminLayout';
 import MetaData from '../layout/MetaData';
@@ -9,6 +12,10 @@ import Loader from '../layout/Loader';
 
 export default function ListOrders() {
   const { data, isLoading, error } = useGetAdminOrdersQuery();
+  const [
+    deleteOrder,
+    { error: isDeleteError, isLoading: isDeleteLoading, isSuccess },
+  ] = useDeleteOrderMutation();
 
   useEffect(() => {
     if (error) {
@@ -16,9 +23,20 @@ export default function ListOrders() {
     }
   }, [error]);
 
+  useEffect(() => {
+    if (isDeleteError) {
+      toast.error(isDeleteError?.data?.message);
+    }
+    if (isSuccess) {
+      toast.success('Orden eliminada!');
+    }
+  }, [isDeleteError, isSuccess]);
 
   if (isLoading) return <Loader />;
 
+  const deleteOrderHandler = (id) => {
+    deleteOrder(id);
+  };
 
   const setOrders = () => {
     const orders = {
@@ -62,8 +80,8 @@ export default function ListOrders() {
             </Link>
             <button
               className="btn btn-outline-danger ms-2"
-              //   onClick={() => deleteProductHandler(order?.id)}
-              //   disabled={isDeleteLoading}
+              onClick={() => deleteOrderHandler(order?.id)}
+              disabled={isDeleteLoading}
             >
               <i className="fa fa-trash"></i>
             </button>

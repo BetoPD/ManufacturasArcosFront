@@ -21,10 +21,10 @@ export default function ProcessOrder() {
   ] = useUpdateOrderMutation();
 
   useEffect(() => {
-    if (order) {
+    if (order?.orderStatus) {
       setStatus(order?.orderStatus);
     }
-  }, [order]);
+  }, [order?.orderStatus]);
 
   useEffect(() => {
     if (error) {
@@ -43,6 +43,11 @@ export default function ProcessOrder() {
   }, [isUpdateError, isSuccess]);
 
   if (isLoading) return <Loader />;
+
+  const updateOrderHandler = (id) => {
+    const data = { status };
+    updateOrder({ id, body: data });
+  };
 
   return (
     <AdminLayout>
@@ -168,7 +173,13 @@ export default function ProcessOrder() {
             </select>
           </div>
 
-          <button className="btn btn-primary w-100">Actualizar estatus</button>
+          <button
+            className="btn btn-primary w-100"
+            disabled={isUpdateLoading}
+            onClick={() => updateOrderHandler(order?.id)}
+          >
+            Actualizar estatus
+          </button>
 
           <h4 className="mt-5 mb-3">Ticket de compra</h4>
           <Link
